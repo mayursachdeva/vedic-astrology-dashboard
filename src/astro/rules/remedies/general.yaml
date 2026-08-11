@@ -1,0 +1,146 @@
+# Remedies (upayas).
+#
+# Remedies are rules, not prose. Each maps a condition over ChartFacts to a specific
+# measure, and carries the source that prescribes it.
+#
+# Two cautions are built into the data rather than left to the reader:
+#
+# 1. Gemstones. Prescriptions differ sharply between traditions, and a stone
+#    recommended for a debilitated graha by one school is forbidden by another. Every
+#    gemstone entry names the school it comes from, and the report groups by source
+#    instead of merging them into a single confident list.
+#
+# 2. Sourcing. BPHS ch. 10 ("Antidotes for Evils") deals with rites for specific
+#    afflictions at birth rather than the planet-by-planet remedy tables in popular
+#    use. Where a remedy is genuinely from the ingested text it is marked located; the
+#    common mantra-and-donation tables are not in it, and say so.
+#
+# If nothing fires, the answer is "nothing indicated". There are no filler remedies.
+
+- id: remedy.debilitated_lagna_lord
+  name: Strengthen the chart's own ruler
+  polarity: neutral
+  domains: [Health]
+  summary: The lord of the lagna is debilitated, combust, or in the 6th, 8th or 12th.
+  plain: >-
+    The planet that rules your chart as a whole is weakly placed. The classical response
+    is to strengthen it rather than to treat each symptom separately: its weekday, its
+    mantra, and restraint in the matters it governs.
+  source: {text: Classical Vedic astrology, status: unlocated}
+  note: >-
+    Not located after searching all 22 works. Bansal (p. 70) prescribes a yantra where
+    "Lagna is weak or else Lagna Lord is weak", which is adjacent but is one specific
+    practice rather than the general principle stated here.
+  when:
+    any:
+      - lord_dignity: {house_lord: 1, is: [debilitated, great_enemy]}
+      - all:
+          - lord_of_in_house: {house_lord: 1, house: dusthana}
+
+- id: remedy.afflicted_moon
+  name: Steady the Moon
+  polarity: neutral
+  domains: [Health, Family]
+  summary: >-
+    The Moon is dark and sits with, or is aspected by, a malefic — or it stands alone
+    with no planet on either side.
+  plain: >-
+    The Moon governs steadiness of mind, and in this chart it is under pressure. The
+    traditional measures are the Monday fast, the Moon's mantra, and offerings of white
+    things — rice, milk, white cloth.
+  source: {text: Encyclopedia of Astrological Remedies (Arun Kumar Bansal), page: '214', status: located}
+  note: >-
+    Bansal lists the Moon’s offerings as "Rice, milk, silver, pearl, curd,
+    condensed sugar (misri), white cloth, white sandalwood, white flowers, white
+    camphor" — which is what this remedy describes.
+  when:
+    any:
+      - all:
+          - moon_waxing: {value: false}
+          - associated_with: {body: Moon, with: malefics}
+      - all:
+          - not:
+              bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: [1, 2, 12], at_least: 1}
+
+- id: remedy.saturn_pressure
+  name: Saturn's disciplines
+  polarity: neutral
+  domains: [Career, Health]
+  summary: Saturn is debilitated, or occupies the 1st, 4th, 7th, 8th or 10th.
+  plain: >-
+    Saturn is placed where its weight is felt directly. The classical measures are
+    service to the elderly and the poor, the Saturday discipline, and iron or sesame
+    given away rather than kept — all of them acts rather than objects.
+  source: {text: Encyclopedia of Astrological Remedies (Arun Kumar Bansal), page: '218', status: located}
+  note: >-
+    "Horse bean, an object of iron, leather shoes, mustard oil etc (articles of Saturn)
+    should be donated to poor people on Saturday for appeasing Saturn." That is the
+    measure: the weekday, the giving away, the poor, the iron. Pathak (p. 128) adds
+    sesame and blankets in the same form. The attribution is partial in the same way as
+    the Rahu remedy below — both are prescribed for Saturn in general, not for the
+    placements this rule fires on, which come from the Sade Sati literature rather than
+    from a passage naming them.
+  when:
+    any:
+      - dignity: {body: Saturn, is: [debilitated]}
+      - in_house: {body: Saturn, house: [1, 4, 7, 8, 10]}
+
+- id: remedy.weak_house_support
+  name: Attend to the least supported house
+  polarity: neutral
+  domains: [Health, Finance]
+  summary: A house carries 25 or fewer points in the sarvashtakavarga.
+  plain: >-
+    One area of the chart has notably little support behind it. BPHS reads a
+    thinly-marked sign as one that gives its results grudgingly, so it is worth less
+    weight in plans and more patience in practice.
+  source:
+    text: Brihat Parashara Hora Shastra
+    chapter: '66'
+    verse: '69'
+    status: located
+  note: >-
+    The verse defines the bindu and rekha marking and says which is auspicious. The
+    threshold of 25 points is a modern convention, not the text's.
+  when:
+    sav_at_most: {house: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], count: 25}
+
+- id: remedy.sun_afflicted_by_node
+  name: Sun with a node
+  polarity: neutral
+  domains: [Health, Family]
+  summary: The Sun shares a sign with Rahu or Ketu.
+  plain: >-
+    The Sun stands eclipsed. Traditional practice is the dawn water offering to the Sun
+    and the Gayatri, done daily rather than occasionally — the remedy is the regularity
+    as much as the act.
+  source: {text: Rahu and Ketu, page: '116', status: located}
+  note: >-
+    The cited pages give remedies for Rahu — the beej mantra, Durga Saptasati, an
+    eight-faced rudraksha. They are prescribed for Rahu itself rather than for the
+    Sun-with-node combination this rule fires on, so the attribution is partial.
+  when:
+    any:
+      - conjunct: {bodies: [Sun, Rahu]}
+      - conjunct: {bodies: [Sun, Ketu]}
+
+- id: remedy.mars_in_marriage_houses
+  name: Mars and partnership
+  polarity: neutral
+  domains: [Relationships]
+  summary: Mars occupies the 1st, 2nd, 4th, 7th, 8th or 12th.
+  plain: >-
+    Mars sits in one of the houses read for domestic life, which the tradition treats as
+    friction to be managed rather than a fault to be fixed. The usual measures are the
+    Tuesday observance and giving away red things; the more useful one is patience in
+    the first years of a partnership.
+  source: {text: Classical Vedic astrology, status: unlocated}
+  note: >-
+    Not located as a remedy after searching all 22 works. The affliction itself is at
+    Bansal p. 220 (see the Kuja Dosha rule); no passage prescribes the measures named
+    here. What the library does offer runs the other way: Bansal (p. 216) has sweets
+    donated for Mars rather than red things, and his Mars measures (pp. 225-227) are
+    keyed to Lal Kitab house positions, not to the marriage houses. Muhurta Jyotisha
+    (p. 63) states the affliction and its cancellation but prescribes nothing.
+  when:
+    in_house: {body: Mars, house: [1, 2, 4, 7, 8, 12]}

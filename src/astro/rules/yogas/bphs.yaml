@@ -1,0 +1,663 @@
+# Yogas, with their sources.
+#
+# `status: located` means the chapter and verse were found in an ingested text under
+# corpus_md/ and the condition below was written against the actual wording. Reading the
+# verses corrected several rules that had been encoded from memory — Gaja Kesari and
+# Lakshmi were both materially wrong, and Kemadruma was missing a cancellation that made
+# it fire far too often.
+#
+# `status: unlocated` means the rule is in common use but no ingested text states it.
+# Most come from works not yet in the corpus. They are still evaluated, but the reader is
+# told no source was found rather than shown an invented reference.
+#
+# `note` records where the encoded condition interprets or departs from the wording.
+#
+# `plain` is what the reader sees first; `summary` is the technical condition shown
+# underneath it.
+
+# --- Panchamahapurusha: a graha in its own or exalted sign, in a kendra --------
+
+- id: bphs.ruchaka
+  name: Ruchaka Yoga
+  polarity: benefic
+  domains: [Career, Health]
+  summary: Mars in its own or exalted sign, occupying a kendra from the lagna.
+  plain: >-
+    Mars is both strong and prominently placed, which classically marks physical
+    courage, stamina and a taste for command. Read as drive that other people notice.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '75', verse: '1-2', status: located}
+  when:
+    all:
+      - dignity: {body: Mars, is: [exalted, own, moolatrikona]}
+      - in_house: {body: Mars, house: kendra}
+
+- id: bphs.bhadra
+  name: Bhadra Yoga
+  polarity: benefic
+  domains: [Learning, Career]
+  summary: Mercury in its own or exalted sign, occupying a kendra from the lagna.
+  plain: >-
+    Mercury is strong and prominent — quick understanding, clear speech and skill with
+    words, numbers or trade.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '75', verse: '1-2', status: located}
+  when:
+    all:
+      - dignity: {body: Mercury, is: [exalted, own, moolatrikona]}
+      - in_house: {body: Mercury, house: kendra}
+
+- id: bphs.hamsa
+  name: Hamsa Yoga
+  polarity: benefic
+  domains: [Learning, Family]
+  summary: Jupiter in its own or exalted sign, occupying a kendra from the lagna.
+  plain: >-
+    Jupiter is strong and prominent — classically read as good judgement, respect from
+    others and a moral or teaching streak.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '75', verse: '1-2', status: located}
+  when:
+    all:
+      - dignity: {body: Jupiter, is: [exalted, own, moolatrikona]}
+      - in_house: {body: Jupiter, house: kendra}
+
+- id: bphs.malavya
+  name: Malavya Yoga
+  polarity: benefic
+  domains: [Relationships, Finance]
+  summary: Venus in its own or exalted sign, occupying a kendra from the lagna.
+  plain: >-
+    Venus is strong and prominent — comfort, an eye for beauty, and ease in
+    relationships and material life.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '75', verse: '1-2', status: located}
+  when:
+    all:
+      - dignity: {body: Venus, is: [exalted, own, moolatrikona]}
+      - in_house: {body: Venus, house: kendra}
+
+- id: bphs.sasa
+  name: Sasa Yoga
+  polarity: benefic
+  domains: [Career, Finance]
+  summary: Saturn in its own or exalted sign, occupying a kendra from the lagna.
+  plain: >-
+    Saturn is strong and prominent — endurance, authority earned slowly, and influence
+    over people or structures rather than through charm.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '75', verse: '1-2', status: located}
+  when:
+    all:
+      - dignity: {body: Saturn, is: [exalted, own, moolatrikona]}
+      - in_house: {body: Saturn, house: kendra}
+
+# --- Lunar yogas ---------------------------------------------------------------
+
+- id: bphs.gajakesari
+  name: Gaja Kesari Yoga
+  polarity: benefic
+  domains: [Career, Learning]
+  summary: >-
+    Jupiter in a kendra from the lagna or from the Moon, conjunct with or aspected by a
+    benefic, and neither debilitated, combust, nor in an enemy sign.
+  plain: >-
+    Jupiter stands in a supporting position and is in good condition itself. Classically
+    read as steady good sense, recognition that lasts, and support arriving when it is
+    needed.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '36', verse: '3-4', status: located}
+  note: >-
+    An earlier version of this rule checked only "Jupiter in a kendra from the Moon" and
+    fired on roughly a third of all charts. The verse requires three further conditions,
+    all encoded here.
+  when:
+    all:
+      - any:
+          - in_house: {body: Jupiter, house: kendra}
+          - distance: {body: Jupiter, from: Moon, is: kendra}
+      - associated_with: {body: Jupiter, with: benefics}
+      - not:
+          dignity: {body: Jupiter, is: [debilitated, enemy, great_enemy]}
+      - combust: {body: Jupiter, value: false}
+
+- id: bphs.sunapha
+  name: Sunapha Yoga
+  polarity: benefic
+  domains: [Finance]
+  summary: A graha other than the Sun and the nodes occupies the 2nd from the Moon.
+  plain: >-
+    The Moon has support immediately ahead of it, read as self-made means — resources
+    built rather than inherited.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '37', verse: '7-10', status: located}
+  when:
+    bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: 2, at_least: 1}
+
+- id: bphs.anapha
+  name: Anapha Yoga
+  polarity: benefic
+  domains: [Health, Relationships]
+  summary: A graha other than the Sun and the nodes occupies the 12th from the Moon.
+  plain: >-
+    The Moon has support immediately behind it, read as good health, a settled bearing
+    and being well thought of.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '37', verse: '7-10', status: located}
+  when:
+    bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: 12, at_least: 1}
+
+- id: bphs.durudhara
+  name: Durudhara Yoga
+  polarity: benefic
+  domains: [Finance, Family]
+  summary: Grahas other than the Sun and the nodes occupy both the 2nd and the 12th from the Moon.
+  plain: >-
+    The Moon is flanked on both sides. Read as steady support through life — means,
+    helpers and a degree of generosity.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '37', verse: '7-10', status: located}
+  when:
+    all:
+      - bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: 2, at_least: 1}
+      - bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: 12, at_least: 1}
+
+- id: bphs.kemadruma
+  name: Kemadruma Yoga
+  polarity: malefic
+  domains: [Health, Finance, Relationships]
+  summary: >-
+    Excluding the Sun: no graha with the Moon, none in the 2nd or 12th from it, and
+    none in a kendra from the lagna.
+  plain: >-
+    The Moon stands alone, with no planet beside it and none holding up the four corners
+    of the chart. Classically a difficult placement — stretches of isolation, and support
+    that does not arrive when expected.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '37', verse: '11-13', status: located}
+  note: >-
+    The third clause — "or in a Kendr from Lagn" — was missing from an earlier version,
+    which made this fire on charts the verse plainly exempts. With it, the yoga is rare,
+    as the classical commentaries say it should be.
+  when:
+    all:
+      - not:
+          bodies_at_distance: {body: except_sun_and_nodes, from: Moon, is: [1, 2, 12], at_least: 1}
+      - not:
+          body_in_house_group:
+            body: [Moon, Mars, Mercury, Jupiter, Venus, Saturn]
+            house: kendra
+
+- id: bphs.adhi
+  name: Adhi Yoga
+  polarity: benefic
+  domains: [Career, Finance]
+  summary: Benefics occupy the 6th, 7th or 8th houses counted from the Moon.
+  plain: >-
+    The helpful planets sit in the positions from the Moon that classically indicate
+    protection and rank — read as authority, allies, and freedom from opposition.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '37', verse: '5', status: located}
+  when:
+    bodies_at_distance: {body: benefics, from: Moon, is: [6, 7, 8], at_least: 2}
+
+- id: bphs.chandra_mangala
+  name: Chandra-Mangala Yoga
+  polarity: benefic
+  domains: [Finance]
+  summary: The Moon and Mars occupy the same sign.
+  plain: >-
+    The Moon and Mars together are read as a sharp instinct for earning, often through
+    enterprise or property, though with a restless edge.
+  source: {text: Elements of Vedic Astrology (K. S. Charak), page: '358', status: located}
+  note: >-
+    "An additional factor for riches is the association of the Moon and Mars which
+    goes under the name of Chandra-Mangala yoga." Pathak (p. 145) instead reads it as
+    Mars in a kendra from the Moon, a materially wider condition. The association
+    reading is what is encoded.
+  when:
+    conjunct: {bodies: [Moon, Mars]}
+
+- id: bphs.sakata
+  name: Sakata Yoga
+  polarity: malefic
+  domains: [Finance, Career]
+  summary: >-
+    Jupiter occupies the 6th, 8th or 12th from the Moon, while standing outside a
+    kendra from the lagna.
+  plain: >-
+    Jupiter sits awkwardly to the Moon and is not held up by an angle of the chart.
+    Read as fortune that rises and falls rather than holding — gains that are made and
+    then have to be made again.
+  source: {text: Elements of Vedic Astrology (K. S. Charak), page: '376', status: located}
+  note: >-
+    Charak states it as "Jupiter, located in a house other than a kendra, occupies the
+    sixth, the eighth or the twelfth from the Moon". This rule previously had the
+    relation reversed — the Moon in the 6th, 8th or 12th from Jupiter — which is not
+    equivalent: Jupiter in the 12th from the Moon puts the Moon in the 2nd from
+    Jupiter, not the 12th. The kendra exclusion was missing as well. Both are fixed.
+    Charak also lists an unrelated Nabhasa yoga of the same name at p. 341.
+  when:
+    all:
+      - distance: {body: Jupiter, from: Moon, is: [6, 8, 12]}
+      - not:
+          in_house: {body: Jupiter, house: kendra}
+
+- id: bphs.vasumathi
+  name: Vasumathi Yoga
+  polarity: benefic
+  domains: [Finance]
+  summary: >-
+    Every benefic occupies an upachaya house — the 3rd, 6th, 10th or 11th.
+  plain: >-
+    The helpful planets sit in the houses of growth. Read as means that accumulate
+    steadily with effort rather than arriving at once.
+  source: {text: Jyotisha Siddhanta Sara, page: '82', status: located}
+  note: >-
+    "Vasumathi Yoga is caused when all the benefics are in upachaya houses, namely the
+    3rd, 6th, 10th and 11th." This rule previously required only that whatever stood in
+    an upachaya be benefic, which is the converse and much weaker — it holds whenever a
+    single benefic sits there and the others are scattered elsewhere. The text asks
+    that every benefic be gathered in those four houses, which is a far rarer thing.
+  when:
+    all_bodies_in: {body: benefics, house: upachaya}
+
+# --- Solar and combination yogas -----------------------------------------------
+
+- id: bphs.budha_aditya
+  name: Budha-Aditya Yoga
+  polarity: benefic
+  domains: [Learning, Career]
+  summary: The Sun and Mercury occupy the same sign, with Mercury not burnt by the Sun.
+  plain: >-
+    Intelligence working together with self-expression — clear thinking that gets
+    noticed. The pairing only counts when Mercury is far enough from the Sun not to be
+    overwhelmed by it.
+  source: {text: Book One (CD edition), page: '54', status: located}
+  note: >-
+    "With Me, it gives Budha-Aditya yoga (also called Vipuna Yoga) — the result is that
+    the person is very intelligent. Not too close, if too close, Me gets combust." That
+    is the rule as coded, combustion exclusion included. The page also records a
+    disagreement — Narasimha holds the yoga strongest when the two are very close,
+    which is the opposite exclusion — so the condition here follows the majority reading
+    rather than a settled one.
+  when:
+    all:
+      - conjunct: {bodies: [Sun, Mercury]}
+      - combust: {body: Mercury, value: false}
+
+- id: bphs.amala
+  name: Amala Yoga
+  polarity: benefic
+  domains: [Career]
+  summary: >-
+    Exclusively a benefic in the 10th house counted from the lagna, or from the Moon.
+  plain: >-
+    A helpful planet sits at the top of the chart, the place of public life, with no
+    malefic there beside it. Read as a lasting good name and work that reflects well on
+    the person.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '36', verse: '5-6', status: located}
+  note: >-
+    The verse offers the 10th from the lagna or from the Moon; only the first was
+    encoded before. "Exclusively" is read as at least one benefic and no malefic.
+  when:
+    any:
+      - only_benefics_in: {house: 10}
+      - all:
+          - bodies_at_distance: {body: benefics, from: Moon, is: 10, at_least: 1}
+          - not:
+              bodies_at_distance: {body: malefics, from: Moon, is: 10, at_least: 1}
+
+- id: bphs.saraswati
+  name: Saraswati Yoga
+  polarity: benefic
+  domains: [Learning]
+  summary: >-
+    Jupiter, Venus and Mercury each occupy a kendra, a trikona or the 2nd house, with
+    Jupiter strong.
+  plain: >-
+    The three planets of learning are all well placed. Classically read as unusual
+    ability in study, teaching, writing or the arts.
+  source: {text: Classical Vedic astrology, status: unlocated}
+  note: >-
+    Not located. The name appears once in the library — Muhurta Jyotisha p. 72, on when
+    to begin studying a science — which is the muhurta use of the name, not the natal
+    combination this rule tests. Citing it would be borrowing. The rule stays in place
+    because it is in common use, with the gap shown to the reader.
+  when:
+    all:
+      - in_house: {body: Jupiter, house: [1, 2, 4, 5, 7, 9, 10]}
+      - in_house: {body: Venus, house: [1, 2, 4, 5, 7, 9, 10]}
+      - in_house: {body: Mercury, house: [1, 2, 4, 5, 7, 9, 10]}
+      - dignity: {body: Jupiter, is: [exalted, own, moolatrikona, great_friend, friend]}
+
+# --- Raja and dhana yogas --------------------------------------------------------
+
+- id: bphs.raja_kendra_trikona
+  name: Raja Yoga (kendra and trikona lords related)
+  polarity: benefic
+  domains: [Career, Finance]
+  summary: >-
+    A kendra lord and a trikona lord connected by exchange of signs, conjunction, one
+    occupying the other's house, or mutual full aspect — with neither lord also ruling
+    the 6th, 8th or 12th.
+  plain: >-
+    The ruler of one of the chart's pillars is tied to the ruler of one of its fortunate
+    houses. This is the classical signature of rise in standing — position, influence, or
+    a decisive turn upward in circumstances.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '34', verse: '11-12', status: located}
+  note: >-
+    The verse accepts four kinds of relation; only conjunction was encoded before, which
+    missed most qualifying charts. Verse 15 of the same chapter withholds the yoga when
+    either lord also owns a dusthana, and that exclusion is applied here.
+  when:
+    any:
+      - all:
+          - lords_related: {houses: [1, 5]}
+          - not: {lord_owns_dusthana: {house_lord: 1}}
+          - not: {lord_owns_dusthana: {house_lord: 5}}
+      - all:
+          - lords_related: {houses: [1, 9]}
+          - not: {lord_owns_dusthana: {house_lord: 1}}
+          - not: {lord_owns_dusthana: {house_lord: 9}}
+      - all:
+          - lords_related: {houses: [4, 5]}
+          - not: {lord_owns_dusthana: {house_lord: 4}}
+          - not: {lord_owns_dusthana: {house_lord: 5}}
+      - all:
+          - lords_related: {houses: [4, 9]}
+          - not: {lord_owns_dusthana: {house_lord: 4}}
+          - not: {lord_owns_dusthana: {house_lord: 9}}
+      - all:
+          - lords_related: {houses: [7, 5]}
+          - not: {lord_owns_dusthana: {house_lord: 7}}
+          - not: {lord_owns_dusthana: {house_lord: 5}}
+      - all:
+          - lords_related: {houses: [7, 9]}
+          - not: {lord_owns_dusthana: {house_lord: 7}}
+          - not: {lord_owns_dusthana: {house_lord: 9}}
+      - all:
+          - lords_related: {houses: [10, 5]}
+          - not: {lord_owns_dusthana: {house_lord: 10}}
+          - not: {lord_owns_dusthana: {house_lord: 5}}
+      - all:
+          - lords_related: {houses: [10, 9]}
+          - not: {lord_owns_dusthana: {house_lord: 10}}
+          - not: {lord_owns_dusthana: {house_lord: 9}}
+
+- id: bphs.yogakaraka_kendra_trikona
+  name: Yogakaraka in a kendra or trikona
+  polarity: benefic
+  domains: [Career, Finance]
+  summary: >-
+    A graha ruling both a kendra and a trikona occupies a kendra or a trikona itself.
+  plain: >-
+    One planet rules both a pillar house and a fortunate house, and is itself well
+    placed. It becomes the single most helpful planet in the chart, and its periods
+    tend to be the ones that move life forward.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '34', verse: '13', status: located}
+  when:
+    any:
+      - all:
+          - is_yogakaraka: {body: Mars}
+          - in_house: {body: Mars, house: [1, 4, 5, 7, 9, 10]}
+      - all:
+          - is_yogakaraka: {body: Venus}
+          - in_house: {body: Venus, house: [1, 4, 5, 7, 9, 10]}
+      - all:
+          - is_yogakaraka: {body: Saturn}
+          - in_house: {body: Saturn, house: [1, 4, 5, 7, 9, 10]}
+
+- id: bphs.dhana_2_11
+  name: Dhana Yoga (lords of the 2nd and 11th together)
+  polarity: benefic
+  domains: [Finance]
+  summary: The lords of the 2nd and 11th houses occupy the same sign.
+  plain: >-
+    The ruler of accumulated wealth joins the ruler of income. Read as money that comes
+    in and stays rather than passing through.
+  source: {text: Elements of Vedic Astrology (K. S. Charak), page: '355', status: located}
+  note: >-
+    Located on a re-read. An earlier pass saw only the search excerpt, which establishes
+    the houses but not the yoga, and recorded this as unlocated; the full page states it.
+    Charak lists the Dhana yogas as arising "when there is a mutual relationship
+    between ... the second lord on one side and the fifth, or the ninth, or the eleventh
+    lord on the other". Relationship is defined on p. 350 as conjunction, mutual aspect,
+    exchange, or one planet in the other's house aspected by it — this rule implements
+    the first of the four.
+  when:
+    lords_conjunct: {houses: [2, 11]}
+
+- id: bphs.dhana_parivartana
+  name: Dhana Yoga by exchange
+  polarity: benefic
+  domains: [Finance]
+  summary: The lords of the 2nd and 11th houses exchange signs.
+  plain: >-
+    The rulers of wealth and income sit in each other's houses, tying the two together.
+    An exchange is generally read as a stronger link than a simple conjunction.
+  source: {text: Advanced Study of Vimshottari Dasha (K. K. Pathak), page: '108', status: located}
+  note: >-
+    "An exchange of house between the 2nd lord and the 11th lord is both a Maha Yoga and
+    a Dhana Yoga." Stated of this pair specifically, which is why it is cited here rather
+    than Charak's general list of relationships (p. 355, used for the conjunction form).
+  when:
+    parivartana: {houses: [2, 11]}
+
+- id: bphs.lakshmi
+  name: Lakshmi Yoga
+  polarity: benefic
+  domains: [Finance, Family]
+  summary: >-
+    The lord of the 9th occupies a kendra while in its own, moolatrikona or exalted
+    sign, and the lord of the lagna is itself strong.
+  plain: >-
+    The planet ruling fortune is both dignified and prominently placed, with the chart's
+    own ruler strong enough to make use of it. Classically read as durable prosperity.
+  source: {text: Brihat Parashara Hora Shastra, chapter: '36', verse: '27-28', status: located}
+  note: >-
+    The verse says kendra, not kendra-or-trikona, and it requires the lagna lord to be
+    strong. An earlier version allowed trikonas and ignored the lagna lord entirely,
+    which made it fire on charts the verse excludes.
+  when:
+    all:
+      - lord_of_in_house: {house_lord: 9, house: kendra}
+      - lord_dignity: {house_lord: 9, is: [exalted, own, moolatrikona]}
+      - lord_dignity: {house_lord: 1, is: [exalted, own, moolatrikona, great_friend, friend]}
+
+# --- Vipareeta Raja yogas: the lords of difficulty undoing each other ------------
+
+- id: bphs.harsha
+  name: Harsha Yoga (Vipareeta Raja Yoga)
+  polarity: benefic
+  domains: [Health, Career]
+  summary: The lord of the 6th house occupies the 6th, 8th or 12th.
+  plain: >-
+    The ruler of obstacles is itself confined to a difficult house, which classically
+    cancels rather than doubles the trouble. Read as coming out ahead of rivals,
+    illness or debt.
+  source: {text: Advanced Study of Vimshottari Dasha (K. K. Pathak), page: '121', status: located}
+  note: >-
+    Pathak records a genuine split: "Mantreshwar similarly held the 6th lord in any of
+    the 6th, 8th or 12th house as causing Harsha Yoga while majority of astrologers
+    held that 6th lord in the 6th house only would be constituting Harsha Yoga." The
+    wider reading is encoded here; Book One (p. 39) gives the narrow one.
+  when:
+    lord_of_in_house: {house_lord: 6, house: dusthana}
+
+- id: bphs.sarala
+  name: Sarala Yoga (Vipareeta Raja Yoga)
+  polarity: benefic
+  domains: [Health, Finance]
+  summary: The lord of the 8th house occupies the 6th, 8th or 12th.
+  plain: >-
+    The ruler of upheaval is confined to a difficult house. Read as long life and a
+    capacity to survive reversals that would sink other people.
+  source: {text: Book One (CD edition), page: '39', status: located}
+  note: >-
+    "8th lord in 8th house gives: Sarala yoga." The encoded condition accepts any
+    dusthana, following the same wider reading Mantreshwar gives for Harsha.
+  when:
+    lord_of_in_house: {house_lord: 8, house: dusthana}
+
+- id: bphs.vimala
+  name: Vimala Yoga (Vipareeta Raja Yoga)
+  polarity: benefic
+  domains: [Finance, Career]
+  summary: The lord of the 12th house occupies the 6th, 8th or 12th.
+  plain: >-
+    The ruler of loss is confined to a difficult house. Read as spending that stays
+    under control and independence in how one lives.
+  source: {text: Book One (CD edition), page: '39', status: located}
+  note: >-
+    "12th lord in 12th house gives: Vimala yoga." As with Sarala, the encoded
+    condition accepts any dusthana, which is the wider of the two readings.
+  when:
+    lord_of_in_house: {house_lord: 12, house: dusthana}
+
+# --- Afflictions -----------------------------------------------------------------
+
+- id: bphs.kuja_dosha
+  name: Kuja Dosha (Mangal Dosha)
+  polarity: malefic
+  domains: [Relationships]
+  summary: Mars occupies the 1st, 2nd, 4th, 7th, 8th or 12th house from the lagna.
+  plain: >-
+    Mars sits in one of the houses traditionally read for marriage and domestic life,
+    which classical texts treat as friction in partnership. Most texts also list
+    several cancellations, so this is a flag to examine rather than a verdict.
+  source: {text: Encyclopedia of Astrological Remedies (Arun Kumar Bansal), page: '220', status: located}
+  note: >-
+    Bansal gives the 1st, 4th, 7th, 8th and 12th. The Astrology e-book (p. 91) gives
+    the 2nd, 4th, 7th, 8th and 12th, adding that "some include 1 bhava also" — and
+    opens by saying the dosha "is not to be found in the standard astrological texts".
+    The encoded list is the union, the widest reading, since a narrower one would miss
+    charts the other source flags. Read it as a prompt to look, not a verdict.
+  when:
+    in_house: {body: Mars, house: [1, 2, 4, 7, 8, 12]}
+
+- id: bphs.grahana_sun
+  name: Grahana Yoga (Sun with a node)
+  polarity: malefic
+  domains: [Health, Family]
+  summary: The Sun occupies the same sign as Rahu or Ketu.
+  plain: >-
+    The Sun is eclipsed by a node. Read as a struggle with confidence, authority or the
+    father's role — matters of self that take longer than usual to settle.
+  source: {text: Lal Kitab, page: '73', status: located}
+  note: >-
+    "In whatever house Sun is placed with Rahu, its condition will be like Solar eclipse.
+    It will minimise the results of Sun." The effect is stated exactly; the setting is
+    not neutral, since Lal Kitab reaches it through its own house-based system and the
+    sentence sits under a rule about Rahu in the 1st. Ketu is not named there — this
+    rule fires on either node, which is the common reading rather than this page's.
+  when:
+    any:
+      - conjunct: {bodies: [Sun, Rahu]}
+      - conjunct: {bodies: [Sun, Ketu]}
+
+- id: bphs.grahana_moon
+  name: Grahana Yoga (Moon with a node)
+  polarity: malefic
+  domains: [Health, Family]
+  summary: The Moon occupies the same sign as Rahu or Ketu.
+  plain: >-
+    The Moon is eclipsed by a node. Read as unsettled emotional weather and difficulty
+    reading one's own state clearly, especially early in life.
+  source: {text: Astrology e-book, page: '149', status: located}
+  note: >-
+    "Moon should have paksha bala (away from SUN) and should not be trapped by 'Grahana'
+    of Rahu/Ketu" — given as a condition for mental happiness, which is why this rule
+    reads to the mind rather than to the body. Named for both nodes, unlike the Sun form.
+  when:
+    any:
+      - conjunct: {bodies: [Moon, Rahu]}
+      - conjunct: {bodies: [Moon, Ketu]}
+
+- id: bphs.guru_chandala
+  name: Guru Chandala Yoga
+  polarity: malefic
+  domains: [Learning, Family]
+  summary: Jupiter occupies the same sign as Rahu or Ketu.
+  plain: >-
+    The planet of judgement sits with a node. Classically read as unorthodox belief and
+    a tendency to argue with received wisdom — disruptive or original depending on the
+    rest of the chart.
+  source: {text: Book One (CD edition), page: '98', status: located}
+  note: >-
+    "Ju-Ra (Guru Chandala yoga) ... Ra stands for adharma and Ju stands for dharma. So,
+    when they are together they do not work well." The source covers Rahu only; the
+    Ketu limb of this rule is conventional and is not attested here.
+  when:
+    any:
+      - conjunct: {bodies: [Jupiter, Rahu]}
+      - conjunct: {bodies: [Jupiter, Ketu]}
+
+- id: bphs.kala_sarpa
+  name: Kala Sarpa Yoga
+  polarity: malefic
+  domains: [Career, Health]
+  summary: All seven physical grahas fall between Rahu and Ketu, by sign.
+  plain: >-
+    Every planet is hemmed inside the nodal axis. Read as a life with a strong single
+    direction and long blocked stretches before things open. Note this yoga is not in
+    the oldest texts and is treated cautiously by many astrologers.
+  source: {text: Rahu and Ketu, page: '31', status: located}
+  note: >-
+    "Kala Sarpa Yoga is formed when Rahu Ketu hem in the planets in the natal chart" —
+    and the source defines the hemming by degree, not by sign. This implementation
+    compares signs, the commoner reading, which does not break the yoga over a fraction
+    of a degree but will disagree with the cited text for a chart where a graha falls
+    between the nodal degree and its sign boundary.
+  when:
+    all_between_nodes: {}
+
+- id: bphs.daridra
+  name: Daridra Yoga
+  polarity: malefic
+  domains: [Finance]
+  summary: The lord of the 11th house occupies the 6th, 8th or 12th.
+  plain: >-
+    The ruler of income is placed in a house of loss. Read as earnings that leak away,
+    and a need to watch commitments rather than income alone.
+  source: {text: Classical Vedic astrology, status: unlocated}
+  note: >-
+    Not located, and the near misses are worth naming so the hunt is not repeated.
+    Charak (p. 377) uses the name for something else entirely — seven planets in
+    contiguous houses. BPHS ch. 42 is the poverty chapter and every yoga in it turns on
+    the lagna lord or a dusthana lord, never the 11th. Charak (p. 361) sets out
+    Parashara's Daridrya yogas to the same pattern. Pathak (p. 112) comes closest —
+    the 11th lord in the 8th brings "debts ... poverty" — but only when it stands with
+    the 8th lord, and says nothing of the 6th or the 12th, so it states a narrower rule
+    than this one. Either narrow the condition to Pathak's or leave it unlocated; it is
+    left unlocated because the wider form is what is in common use.
+  when:
+    lord_of_in_house: {house_lord: 11, house: dusthana}
+
+- id: bphs.neecha_bhanga
+  name: Neecha Bhanga (cancelled debilitation)
+  polarity: benefic
+  domains: [Career, Health]
+  summary: >-
+    A debilitated graha whose dispositor occupies a kendra from the lagna, which
+    classical texts treat as cancelling the debilitation.
+  plain: >-
+    A weakened planet is rescued by the planet that rules the sign it sits in. Read as
+    a difficulty that turns into a strength, usually later in life rather than early.
+  source: {text: Book One (CD edition), page: '30', status: located}
+  note: >-
+    "Neecha bhanga of any planet is given by the lord of that house or the lord of the
+    conjoining planet’s house is in a Kendra from Lagna (Asc)" — which is the
+    condition encoded here. The texts list further cancellations that are not encoded.
+  when:
+    any:
+      - all:
+          - dignity: {body: Sun, is: debilitated}
+          - dispositor_in_house: {body: Sun, house: kendra}
+      - all:
+          - dignity: {body: Moon, is: debilitated}
+          - dispositor_in_house: {body: Moon, house: kendra}
+      - all:
+          - dignity: {body: Mars, is: debilitated}
+          - dispositor_in_house: {body: Mars, house: kendra}
+      - all:
+          - dignity: {body: Mercury, is: debilitated}
+          - dispositor_in_house: {body: Mercury, house: kendra}
+      - all:
+          - dignity: {body: Jupiter, is: debilitated}
+          - dispositor_in_house: {body: Jupiter, house: kendra}
+      - all:
+          - dignity: {body: Venus, is: debilitated}
+          - dispositor_in_house: {body: Venus, house: kendra}
+      - all:
+          - dignity: {body: Saturn, is: debilitated}
+          - dispositor_in_house: {body: Saturn, house: kendra}

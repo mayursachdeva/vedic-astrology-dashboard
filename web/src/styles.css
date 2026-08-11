@@ -1,0 +1,668 @@
+:root {
+  --ink: #1c1a17;
+  --muted: #6b6459;
+  --line: #d9d2c5;
+  --paper: #fbf9f4;
+  --panel: #ffffff;
+  --accent: #8a5a2b;
+  --warn: #8a3b2b;
+
+  /* Reading colours. One meaning each, used nowhere else, so a colour on this page
+     always answers the same question: is this helping or costing? */
+  --good: var(--accent);
+  --bad: var(--warn);
+  --flat: var(--muted);
+  --good-wash: #f0e6d8;
+  --bad-wash: #f4e2dd;
+  --flat-wash: #efece5;
+  --raised: #ffffff;
+
+  --radius: 10px;
+  --gap: 1rem;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ece7dd;
+    --muted: #9c948a;
+    --line: #3a352e;
+    --paper: #16150f;
+    --panel: #1e1c16;
+    --accent: #d3a05e;
+    --warn: #e08a72;
+    --good-wash: #2c2317;
+    --bad-wash: #33201c;
+    --flat-wash: #23211b;
+    --raised: #24211a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px/1.55 ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+aside h1 { font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.people { list-style: none; margin: 0 0 1.5rem; padding: 0; }
+.people li { display: flex; align-items: center; gap: 0.25rem; }
+.people button {
+  flex: 1;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 0.5rem 0.25rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.people li.selected > button:first-child { color: var(--accent); font-weight: 600; }
+.people .remove { flex: 0; color: var(--muted); border-bottom: none; }
+
+.profile-form { display: grid; gap: 0.5rem; }
+.profile-form h3 { margin: 0; font-size: 0.95rem; }
+.profile-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.profile-form input,
+.profile-form select {
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+  color: inherit;
+  font: inherit;
+}
+.profile-form label { display: grid; gap: 0.25rem; font-size: 0.85rem; color: var(--muted); }
+.profile-form button {
+  padding: 0.5rem;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  background: var(--accent);
+  color: var(--paper);
+  font: inherit;
+  cursor: pointer;
+}
+
+.plain { max-width: 62ch; }
+.error { color: var(--warn); }
+.warnings { color: var(--warn); font-size: 0.9rem; max-width: 62ch; }
+
+.term {
+  text-decoration: underline dotted var(--muted);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.summary h2 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+
+.technical { margin-top: 1rem; font-size: 0.9rem; }
+.technical summary { cursor: pointer; color: var(--muted); }
+.technical dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.2rem 1rem;
+  margin: 0.75rem 0 0;
+}
+.technical dt { color: var(--muted); }
+.technical dd { margin: 0; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; }
+
+.charts { margin: 2rem 0; }
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tabs button {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.tabs button.active { border-color: var(--accent); color: var(--accent); }
+
+.kundli { margin: 0 0 1.5rem; max-width: 420px; }
+.kundli figcaption { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+.kundli svg { width: 100%; height: auto; }
+.kundli .frame { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.kundli .house { cursor: default; }
+.kundli text { text-anchor: middle; font-family: ui-sans-serif, system-ui, sans-serif; }
+.kundli .sign-number { font-size: 11px; fill: var(--muted); }
+.kundli .graha { font-size: 13px; fill: var(--ink); }
+.kundli .graha.retrograde { fill: var(--warn); }
+/* The glyphs carry no click target of their own. They used to: a 14px transparent
+   stroke that made them tappable, sitting on top of the house cell and calling
+   stopPropagation, so clicking any house containing a planet selected the planet
+   instead and the house never opened. The house reading says everything that card
+   did, so the glyph is now just a label. */
+
+.positions { border-collapse: collapse; width: 100%; max-width: 640px; font-size: 0.9rem; }
+.positions caption { text-align: left; color: var(--muted); padding-bottom: 0.5rem; }
+.positions th, .positions td { text-align: left; padding: 0.35rem 0.6rem 0.35rem 0; border-bottom: 1px solid var(--line); }
+.positions th { font-weight: 600; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.positions .retro { color: var(--warn); }
+
+.yogas h4 {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.yoga-list { list-style: none; margin: 0; padding: 0; }
+.yoga-list > li {
+  border-left: 3px solid var(--line);
+  padding: 0.25rem 0 0.25rem 0.9rem;
+  margin-bottom: 1rem;
+}
+.yoga-list > li.benefic { border-left-color: var(--accent); }
+.yoga-list > li.malefic { border-left-color: var(--warn); }
+.yoga-list p.plain { margin: 0 0 0.35rem; }
+.domains { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 0.55rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.citation { font-size: 0.85rem; color: var(--muted); }
+.citation.unverified { color: var(--warn); }
+
+.sav { list-style: none; margin: 0; padding: 0; max-width: 520px; }
+.sav li { display: flex; align-items: center; gap: 0.6rem; padding: 0.15rem 0; }
+.sav .label { width: 5.5rem; font-size: 0.85rem; }
+.sav .label small { color: var(--muted); margin-left: 0.35rem; }
+.sav .bar { height: 0.6rem; background: var(--line); border-radius: 2px; min-width: 2px; }
+.sav li.strong .bar { background: var(--accent); }
+.sav li.weak .bar { background: var(--warn); }
+.sav .count { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+/* Planet names and rupas need more room than a house number and a sign. */
+.shadbala .sav .label { width: 9.5rem; }
+.ashtakavarga .technical dl { display: flex; gap: 1rem; flex-wrap: wrap; }
+.ashtakavarga .technical dl div { display: flex; gap: 0.35rem; }
+
+.timeline ol { list-style: none; margin: 0; padding: 0; }
+.timeline > ol > li { border-bottom: 1px solid var(--line); }
+.timeline summary { display: flex; gap: 1rem; align-items: baseline; padding: 0.5rem 0; cursor: pointer; }
+.timeline .span { color: var(--muted); font-size: 0.9rem; }
+.timeline .years { color: var(--muted); font-size: 0.85rem; margin-left: auto; }
+.timeline .badge {
+  background: var(--accent);
+  color: var(--paper);
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.timeline .sub li { display: flex; gap: 1rem; align-items: baseline; padding: 0.2rem 0 0.2rem 1.5rem; font-size: 0.9rem; }
+.timeline .sub li.active { color: var(--accent); }
+.timeline .footnote { color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 820px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+.transits .reading.supported { color: var(--accent); }
+.transits .reading.obstructed { color: var(--warn); }
+.positions tr.poor td:last-child { color: var(--warn); }
+.positions tr.good td:last-child { color: var(--accent); }
+.timeline-list { list-style: none; margin: 0 0 1rem; padding: 0; max-width: 640px; }
+.timeline-list li {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+.timeline-list li.sade_sati strong { color: var(--warn); }
+.timeline-list small { color: var(--muted); display: block; }
+
+.stages { margin: 2rem 0; }
+.stage-list { list-style: none; margin: 1rem 0 0; padding: 0; }
+.stage-list > li { border-bottom: 1px solid var(--line); padding: 0.6rem 0; }
+.stage-list > li.current { border-left: 3px solid var(--accent); padding-left: 0.8rem; }
+.stage-head {
+  display: block; width: 100%; text-align: left; background: none; border: none;
+  padding: 0; font: inherit; color: inherit; cursor: pointer;
+}
+.stage-head .when { display: block; font-size: 0.82rem; color: var(--muted); }
+.stage-head .what { display: block; font-size: 1.02rem; margin-top: 0.15rem; }
+.stage-head .badge { margin-left: 0.5rem; }
+.domain-bars { list-style: none; display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0.5rem 0 0; padding: 0; }
+.domain-bars li { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; }
+.domain-bars .name { color: var(--muted); }
+.domain-bars .bar { height: 0.5rem; border-radius: 2px; background: var(--line); min-width: 3px; }
+.domain-bars li.supported .bar { background: var(--accent); }
+.domain-bars li.under-strain .bar { background: var(--warn); }
+.domain-bars .score { font-variant-numeric: tabular-nums; color: var(--muted); }
+.stage-detail { margin: 0.75rem 0 0.25rem; font-size: 0.88rem; }
+.stage-detail ul { margin: 0.2rem 0 0.7rem; padding-left: 1.1rem; color: var(--muted); }
+.remedies h4 { margin: 1.1rem 0 0.4rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.footnote { color: var(--muted); font-size: 0.85rem; max-width: 62ch; }
+
+.synastry { margin: 2rem 0; }
+.compare-picker { display: block; margin: 0.5rem 0 1rem; font-size: 0.9rem; color: var(--muted); }
+.compare-picker select {
+  padding: 0.35rem 0.5rem; border: 1px solid var(--line); border-radius: 3px;
+  background: var(--panel); color: inherit; font: inherit;
+}
+.score-line { font-size: 1.15rem; }
+.synastry h4 { margin: 1.2rem 0 0.4rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+/* The exchange so far. The question is shown above its answer so a thread of several
+   turns can be scanned without opening anything. */
+.thread { display: grid; gap: var(--gap); margin: 0 0 var(--gap); }
+.turn { display: grid; gap: 0.45rem; }
+.asked {
+  margin: 0; justify-self: start; max-width: 62ch;
+  padding: 0.4rem 0.85rem; border-radius: 999px;
+  background: var(--flat-wash); font-size: 0.95rem;
+}
+/* The answer as it is being written, under the lookups that produced it. */
+.lookups .draft { color: var(--ink); margin-top: 0.5rem; }
+.lookups .draft::before { content: ''; }
+
+.ask-form { display: flex; gap: 0.5rem; max-width: 640px; margin: 0 0 0.4rem;
+  position: sticky; bottom: 0; background: var(--paper); padding: 0.4rem 0; }
+.ask-form input {
+  flex: 1; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 3px;
+  background: var(--panel); color: inherit; font: inherit;
+}
+.ask-form button {
+  padding: 0.5rem 1rem; border: 1px solid var(--accent); border-radius: 3px;
+  background: var(--accent); color: var(--paper); font: inherit; cursor: pointer;
+}
+/* The lookups, shown while they happen. Most of the wait is these, not the writing. */
+.lookups { list-style: none; margin: 0; font-size: 0.9rem; color: var(--muted); }
+.lookups li { margin: 0.2rem 0; }
+.lookups li::before { content: '✓ '; color: var(--accent); }
+.lookups li.retro::before { content: '· '; }
+.lookups li.working { color: var(--accent); }
+.lookups li.working::before { content: '… '; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.answer { max-width: 68ch; }
+.answer > :first-child { margin-top: 0; }
+.answer .technical ul { padding-left: 1.1rem; }
+.answer code { font-size: 0.85em; }
+
+.answer h4 { margin: 0.9rem 0 0.3rem; font-size: 0.95rem; }
+.answer ul { margin: 0.3rem 0 0.7rem; padding-left: 1.2rem; }
+.answer li { margin: 0.15rem 0; max-width: 62ch; }
+.answer p { margin: 0.5rem 0; }
+
+.place { position: relative; }
+.place > input { width: 100%; padding: 0.45rem 0.5rem; border: 1px solid var(--line);
+  border-radius: 3px; background: var(--panel); color: inherit; font: inherit; }
+.place.chosen { display: flex; align-items: center; gap: 0.5rem;
+  border: 1px solid var(--accent); border-radius: 3px; padding: 0.4rem 0.5rem; }
+.place.chosen span { flex: 1; font-size: 0.9rem; }
+.place.chosen small { display: block; color: var(--muted); font-size: 0.78rem; }
+.place.chosen button { background: none; border: none; color: var(--accent);
+  font: inherit; font-size: 0.82rem; cursor: pointer; padding: 0; }
+.place-options { list-style: none; margin: 0.25rem 0 0; padding: 0;
+  border: 1px solid var(--line); border-radius: 3px; background: var(--panel);
+  max-height: 15rem; overflow-y: auto; }
+.place-options button { display: block; width: 100%; text-align: left; background: none;
+  border: none; border-bottom: 1px solid var(--line); padding: 0.4rem 0.55rem;
+  font: inherit; font-size: 0.88rem; color: inherit; cursor: pointer; }
+.place-options button:hover { background: var(--paper); }
+.place-options small { display: block; color: var(--muted); font-size: 0.75rem; }
+
+.cite-open { background: none; border: none; padding: 0; font: inherit; font-size: 0.85rem;
+  color: var(--accent); cursor: pointer; text-align: left; }
+.passage blockquote { margin: 0.4rem 0 0.6rem; padding: 0.5rem 0.8rem;
+  border-left: 2px solid var(--line); background: var(--panel); font-size: 0.88rem;
+  max-width: 68ch; }
+.library { margin: 2rem 0; }
+.hits { list-style: none; margin: 1rem 0 0; padding: 0; }
+.hits > li { margin-bottom: 1rem; }
+.hits blockquote { margin: 0.25rem 0 0; padding: 0.5rem 0.8rem;
+  border-left: 2px solid var(--line); background: var(--panel); font-size: 0.88rem;
+  max-width: 68ch; }
+.library .technical ul { padding-left: 1.1rem; font-size: 0.85rem; color: var(--muted); }
+
+details.library { margin: 2rem 0; border-top: 1px solid var(--line); padding-top: 1rem; }
+details.library > summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; }
+details.library > summary::marker { color: var(--muted); }
+
+/* --- the shell ------------------------------------------------------------ */
+.views { display: grid; gap: 0.1rem; margin: 0 0 1.25rem; }
+.views button {
+  text-align: left; background: none; border: none; padding: 0.35rem 0.5rem;
+  font: inherit; font-size: 0.92rem; color: var(--muted); cursor: pointer;
+  border-left: 2px solid transparent; border-radius: 0 3px 3px 0;
+}
+.views button:hover { color: var(--ink); }
+.views button.active {
+  color: var(--accent); border-left-color: var(--accent); background: var(--panel);
+}
+.reading-state { margin: 0 0 1.25rem; padding: 0.6rem; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 3px; }
+.reading-state p { margin: 0 0 0.35rem; }
+button.link { background: none; border: none; padding: 0; font: inherit;
+  font-size: 0.88rem; color: var(--accent); cursor: pointer; }
+
+/* --- the pieces pages are built from -------------------------------------- */
+/* A panel is a box with a label. Three tiers, and the tier is the whole ranking
+   system: what changes your week, what explains it, and what proves it. */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.05rem 1rem;
+}
+.panel-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.6rem; }
+.panel-head h3 { margin: 0; flex: 1; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted); }
+.panel-meta { font-size: 0.78rem; color: var(--muted); }
+.panel.tier-1 { background: var(--raised); border-color: var(--accent);
+  box-shadow: 0 1px 0 var(--line); padding: 1.15rem 1.3rem 1.25rem; }
+.panel.tier-1 .panel-head h3 { color: var(--accent); }
+.panel.tier-3 { background: none; border-style: dashed; }
+.panel > :last-child { margin-bottom: 0; }
+
+/* A score, shown rather than written: right of centre is support, left is strain.
+   The track is --line, not a wash: on the panel background a wash was invisible, so
+   only the fill showed and a small score looked like a stray dot. */
+.meter { position: relative; display: inline-block; width: 4.5rem; height: 0.5rem;
+  background: var(--line); border-radius: 999px; vertical-align: middle; flex: none; }
+.meter-axis { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px;
+  background: var(--paper); }
+.meter-fill { position: absolute; top: 0; bottom: 0; border-radius: 999px;
+  background: var(--flat); min-width: 2px; }
+.meter-fill.good { background: var(--good); }
+.meter-fill.bad { background: var(--bad); }
+
+.verdict-chip { display: inline-flex; align-items: baseline; gap: 0.35rem;
+  border-radius: 999px; padding: 0.05rem 0.6rem; font-size: 0.74rem;
+  text-transform: uppercase; letter-spacing: 0.07em; background: var(--flat-wash);
+  color: var(--muted); white-space: nowrap; }
+.verdict-chip b { font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.verdict-chip.supported { background: var(--good-wash); color: var(--good); }
+.verdict-chip.under-strain { background: var(--bad-wash); color: var(--bad); }
+
+.stat { display: grid; gap: 0.1rem; }
+.stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--muted); }
+.stat-value { font-size: 1.15rem; line-height: 1.2; }
+.stat-note { font-size: 0.8rem; color: var(--muted); }
+.stat.good .stat-value { color: var(--good); }
+.stat.bad .stat-value { color: var(--bad); }
+
+/* --- reading views -------------------------------------------------------- */
+main h2 { font-size: 1.7rem; margin: 0 0 0.75rem; }
+main h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); margin: 1.75rem 0 0.5rem; }
+.lead { font-size: 1.05rem; line-height: 1.6; max-width: 64ch; }
+.lead p { margin: 0 0 0.8rem; }
+.headline { font-size: 1.1rem; }
+
+/* The page title carries the one line that matters, so the two are one block. */
+.page-head { display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin: 0 0 1.25rem;
+  border-bottom: 1px solid var(--line); padding-bottom: 0.9rem; }
+.page-head h2 { margin: 0; }
+.page-head .sub { color: var(--muted); font-size: 0.9rem; margin: 0.2rem 0 0; }
+
+.area-cards { list-style: none; display: grid; gap: var(--gap); margin: 0; padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.area-cards button {
+  display: grid; gap: 0.4rem; width: 100%; height: 100%; text-align: left;
+  padding: 0.85rem 0.95rem; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--panel); font: inherit; color: inherit; cursor: pointer;
+  align-content: start;
+}
+.area-cards button:hover { border-color: var(--accent); }
+.area-cards .card-top { display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem; }
+.area-cards strong { font-size: 1.02rem; }
+.area-cards li.supported button { box-shadow: inset 3px 0 0 var(--good); }
+.area-cards li.under-strain button { box-shadow: inset 3px 0 0 var(--bad); }
+.area-cards li.mixed button { box-shadow: inset 3px 0 0 var(--line); }
+.area-cards .because { font-size: 0.85rem; color: var(--muted); }
+
+/* Every area at once, as rows with meters — a shape you can scan instead of six
+   numbers you have to compare one pair at a time. */
+.area-rows { list-style: none; margin: 0; padding: 0; }
+.area-rows li + li { border-top: 1px solid var(--line); }
+.area-rows button { display: grid; grid-template-columns: 6.5rem 4.5rem 1fr auto;
+  align-items: center; gap: 0.75rem; width: 100%; text-align: left; padding: 0.45rem 0.2rem;
+  background: none; border: none; font: inherit; color: inherit; cursor: pointer;
+  border-radius: 4px; }
+.area-rows button:hover { background: var(--flat-wash); }
+.area-rows .name { font-size: 0.95rem; }
+.area-rows .why { font-size: 0.82rem; color: var(--muted); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.area-rows .go { color: var(--muted); font-size: 0.9rem; }
+
+.drivers { list-style: none; margin: 0; padding: 0; }
+.drivers li { display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0;
+  font-size: 0.9rem; }
+.drivers li + li { border-top: 1px solid var(--line); }
+.drivers .what { flex: 1; }
+.drivers .weight { font-variant-numeric: tabular-nums; font-size: 0.82rem;
+  width: 1.8rem; text-align: right; }
+.drivers .weight.good { color: var(--good); }
+.drivers .weight.bad { color: var(--bad); }
+
+.chapter-strip { list-style: none; margin: 0; padding: 0; }
+.chapter-strip li { display: grid; grid-template-columns: 6.2rem 4.5rem 1fr;
+  gap: 0.7rem; padding: 0.4rem 0.2rem; align-items: center; font-size: 0.9rem;
+  border-radius: 4px; }
+.chapter-strip li + li { border-top: 1px solid var(--line); }
+.chapter-strip li.current { background: var(--good-wash); }
+.chapter-strip .when { color: var(--muted); font-size: 0.82rem;
+  font-variant-numeric: tabular-nums; }
+.chapter-strip .what { display: flex; align-items: baseline; gap: 0.5rem;
+  flex-wrap: wrap; }
+.chapter-strip .what .footnote { font-size: 0.82rem; }
+
+.prompts { display: grid; gap: 0.4rem; }
+.prompts button { text-align: left; padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+  font: inherit; font-size: 0.88rem; color: var(--accent); cursor: pointer; }
+.prompts button:hover { border-color: var(--accent); }
+
+/* --- home ----------------------------------------------------------------- */
+.home > .panel + .panel,
+.home > .panel + .home-grid { margin-top: var(--gap); }
+.home-grid { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr) 20rem;
+  align-items: start; }
+.home-main, .home-rail { display: grid; gap: var(--gap); align-content: start; }
+@media (max-width: 1040px) { .home-grid { grid-template-columns: 1fr; } }
+
+.headline { margin: 0 0 0.7rem; font-size: 1.25rem; line-height: 1.35; }
+.next-up { margin: 0.6rem 0 0; }
+.home-rail .kundli { max-width: none; margin: 0 0 0.6rem; }
+
+.head-verdict { display: grid; justify-items: end; gap: 0.2rem; }
+.head-verdict small { font-size: 0.68rem; text-transform: uppercase;
+  letter-spacing: 0.09em; color: var(--muted); }
+.head-verdict b { font-size: 0.95rem; font-weight: 600; }
+
+/* --- area and timeline: reading on the left, numbers on the right ---------- */
+.area-grid-2 { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr) 17rem;
+  align-items: start; }
+.area-main, .area-rail { display: grid; gap: var(--gap); align-content: start; }
+/* The numbers stay beside the reading rather than scrolling away from it. */
+.area-rail { position: sticky; top: 1rem; }
+@media (max-width: 1040px) { .area-rail { position: static; } }
+.timeline-view > .panel + .panel,
+.timeline-view > .panel + .area-grid-2 { margin-top: var(--gap); }
+@media (max-width: 1040px) { .area-grid-2 { grid-template-columns: 1fr; } }
+
+.stat-stack { display: grid; gap: 0.85rem; }
+.stat-stack .stat + .stat { border-top: 1px solid var(--line); padding-top: 0.85rem; }
+
+/* A chip inside a grid stretches to the column unless told otherwise. */
+.area-cards .verdict-chip, .chapter-strip .verdict-chip { justify-self: start; }
+
+/* --- the technical view --------------------------------------------------- */
+.tech-grid { display: grid; gap: var(--gap); grid-template-columns: 21rem minmax(0, 1fr);
+  align-items: start; }
+.tech-main { display: grid; gap: var(--gap); align-content: start; }
+/* The chart stays in view while the tables scroll past it, which is the whole reason
+   for putting it in a rail rather than at the top. */
+.tech-rail { position: sticky; top: 1rem; }
+.tech-rail .kundli { max-width: none; margin: 0; }
+.tech-rail .tabs { margin-bottom: 0.7rem; }
+.tech-rail .tabs button { padding: 0.25rem 0.6rem; font-size: 0.85rem; }
+@media (max-width: 1040px) {
+  .tech-grid { grid-template-columns: 1fr; }
+  .tech-rail { position: static; }
+}
+
+/* Each box already carries its own heading, so the section inside it should not add
+   another block of margin above one. */
+.panel.anchored > section { margin: 0; }
+.panel.anchored > section > h3:first-child { margin-top: 0; }
+.panel.anchored { position: relative; }
+.panel.anchored > span[id] { position: absolute; top: -1rem; }
+
+.jump { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+.jump a { font-size: 0.78rem; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 0.1rem 0.55rem; }
+.jump a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* --- clicking a house ------------------------------------------------------ */
+/* A cell holds a numeral and maybe two glyphs, so there is next to nothing to aim at.
+   The invisible disc is the target; the wash on hover is how you know it is one. */
+.kundli .house.clickable { cursor: pointer; }
+.kundli .house-hit { fill: transparent; }
+.kundli .house.clickable:hover .house-hit { fill: var(--flat-wash); }
+.kundli .house.selected .house-hit { fill: var(--good-wash); }
+.kundli .house.clickable:hover .sign-number,
+.kundli .house.selected .sign-number { fill: var(--accent); }
+
+.house-reading { display: grid; gap: var(--gap); }
+.house-reading .headline { margin: 0 0 0.6rem; }
+.house-verdict { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.house-reading h4 { margin: 1rem 0 0.3rem; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted); }
+.house-reading .plain { max-width: 70ch; }
+/* A quotation from the text, as distinct from this program's own sentences. */
+.house-reading .quoted { border-left: 2px solid var(--accent); padding-left: 0.8rem;
+  margin: 0.5rem 0; max-width: 70ch; font-style: italic; }
+.house-reading .reasons { margin: 0.4rem 0 0; padding-left: 1.1rem;
+  font-size: 0.88rem; color: var(--muted); }
+.house-reading .mantra { font-size: 1.05rem; letter-spacing: 0.01em; margin: 0.3rem 0; }
+.house-reading .remedy + .remedy { border-top: 1px solid var(--line);
+  margin-top: 1.2rem; padding-top: 0.6rem; }
+.house-reading .remedy h4 em { font-style: normal; color: var(--accent);
+  text-transform: none; letter-spacing: 0; font-size: 0.95em; }
+/* A small heading inside a block, so behaviour and recitation are told apart at a
+   glance rather than read as one paragraph. */
+.house-reading .label { margin: 0.7rem 0 0.2rem; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); }
+.house-reading .profile { margin-top: 0.6rem; }
+.house-reading .read-for { margin: 0.5rem 0 0; font-size: 0.92rem; }
+.house-reading .read-for .cite { color: var(--muted); font-size: 0.85rem; }
+.house-reading .label em { font-style: normal; text-transform: none;
+  letter-spacing: 0; color: var(--muted); }
+.house-reading .profile .cite { opacity: 0.75; }
+.house-reading .avastha { margin-top: 0.6rem; }
+.house-reading .parts { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem;
+  margin: 0.6rem 0 0; font-size: 0.85rem; }
+.house-reading .parts div { display: flex; gap: 0.35rem; }
+.house-reading .parts dt { color: var(--muted); }
+.house-reading .parts dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+/* --- stepping through a house --------------------------------------------- */
+.steps { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.steps button {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--panel); font: inherit; font-size: 0.82rem; color: var(--muted);
+  cursor: pointer;
+}
+.steps button .n {
+  display: inline-grid; place-items: center; width: 1.15rem; height: 1.15rem;
+  border-radius: 50%; background: var(--flat-wash); font-size: 0.7rem;
+}
+.steps button.read { color: var(--ink); }
+.steps button.read .n { background: var(--good-wash); color: var(--good); }
+.steps button.here { border-color: var(--accent); color: var(--accent); }
+.steps button.here .n { background: var(--accent); color: var(--paper); }
+/* Locked steps stay visible so the shape of what is coming is clear. */
+.steps button.locked { opacity: 0.45; cursor: not-allowed; }
+
+.step-nav { display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; }
+.step-nav .primary {
+  padding: 0.45rem 1rem; border: 1px solid var(--accent); border-radius: 999px;
+  background: var(--accent); color: var(--paper); font: inherit; cursor: pointer;
+}
+.step-nav .link:disabled { opacity: 0.35; cursor: default; }
+
+/* A row of short labelled facts, which reads faster than the sentence it replaces. */
+.facts { display: grid; gap: 0.5rem 1.4rem; margin: 0.6rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+.fact { display: grid; gap: 0.1rem; }
+.fact-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--muted); }
+.fact-value { font-size: 0.95rem; }
+
+.occupant + .occupant, .remedy + .remedy { border-top: 1px solid var(--line);
+  margin-top: 1.1rem; padding-top: 0.8rem; }
+.occupant > header, .remedy > header { display: flex; align-items: baseline;
+  gap: 0.6rem; }
+.occupant > header h4, .remedy > header h4 { margin: 0; font-size: 1rem;
+  text-transform: none; letter-spacing: 0; color: var(--ink); }
+.remedy > header em { font-style: normal; font-size: 0.75rem; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.07em; }
+.verdict-line { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+  margin-bottom: 0.6rem; }
+.verdict-line span { color: var(--muted); font-size: 0.9rem; }
+
+/* A passage opens one sentence at a time; the rest is a tap away. */
+.passage { margin: 0.4rem 0 0.8rem; }
+.passage .plain { margin: 0 0 0.2rem; }
+.passage .more { background: none; border: none; padding: 0; font: inherit;
+  color: var(--accent); cursor: pointer; }
+
+.source { margin: 0.4rem 0; font-size: 0.88rem; }
+.source summary { cursor: pointer; color: var(--muted); }
+.source blockquote { margin: 0.4rem 0 0.2rem; padding: 0.5rem 0.8rem;
+  border-left: 2px solid var(--line); background: var(--panel); max-width: 70ch; }
+
+.wayfinder { display: flex; align-items: baseline; justify-content: space-between;
+  gap: 0.75rem; width: 100%; padding: 0.5rem 0.2rem; background: none; border: none;
+  font: inherit; color: var(--accent); cursor: pointer; text-align: left; }
+.wayfinder small { color: var(--muted); font-size: 0.8rem; }
+.wayfinder::after { content: '→'; }
+
+/* --- the timeline band ---------------------------------------------------- */
+.band { position: relative; height: 4.4rem; margin: 0.5rem 0 1.8rem; }
+.band.compact { height: 2.6rem; margin: 0.2rem 0 1.6rem; }
+.band .year { position: absolute; bottom: 0; font-size: 0.72rem;
+  color: var(--muted); transform: translateX(-50%); }
+.band .chapter { position: absolute; top: 0; height: 2.7rem; padding: 0 0.3rem;
+  border: none; border-right: 1px solid var(--paper); background: var(--flat-wash);
+  cursor: pointer; font: inherit; font-size: 0.7rem; color: var(--muted);
+  overflow: hidden; white-space: nowrap; text-align: left; }
+.band.compact .chapter { height: 1.4rem; border-radius: 2px; }
+.band .chapter:first-of-type { border-radius: 3px 0 0 3px; }
+.band .chapter:last-of-type { border-radius: 0 3px 3px 0; border-right: none; }
+.band .chapter.supported { background: var(--good); color: var(--paper); }
+.band .chapter.under-strain { background: var(--bad); color: var(--paper); }
+.band .chapter:hover { filter: brightness(1.15); }
+/* The chapter running now is the one thing on this strip a reader is looking for. */
+.band .chapter.current { outline: 2px solid var(--ink); outline-offset: -1px; z-index: 2; }
+.band .chapter.open { box-shadow: inset 0 -3px 0 var(--ink); z-index: 2; }

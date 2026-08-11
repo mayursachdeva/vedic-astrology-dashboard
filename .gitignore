@@ -1,0 +1,31 @@
+# --- birth data. Never. ------------------------------------------------------
+# astro.db holds real people's names, birth times to the minute and coordinates —
+# including a family member's, which is not ours to publish. The app creates it
+# empty on first run.
+data/astro.db
+data/*.db-journal
+data/*.db-wal
+
+# --- the library -------------------------------------------------------------
+# Eighteen copyrighted books and the text extracted from them. The code that reads
+# them is here; the books are not ours to redistribute. See README for what to put
+# back and where.
+knowledge-layer/
+corpus_md/
+*.pdf
+data/ocr/
+
+# --- large regenerable artefacts ---------------------------------------------
+# 58MB of GeoNames, rebuilt by scripts/fetch_places.py.
+data/places.db
+data/places/
+
+# --- environments and caches -------------------------------------------------
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+web/dist/
+.DS_Store
